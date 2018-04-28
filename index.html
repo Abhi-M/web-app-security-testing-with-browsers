@@ -1,0 +1,578 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta content="Abhi M Balakrishnan" name="author">
+	<meta content="Web app security testing with browsers" name="description">
+	<title>Web app security testing with browsers</title>
+	
+	
+	<!--
+
+__      __      ___.                                                                             
+/  \    /  \ ____\_ |__   _____  ______ ______                                                    
+\   \/\/   // __ \| __ \  \__  \ \____ \\____ \                                                   
+ \        /\  ___/| \_\ \  / __ \|  |_> >  |_> >                                                  
+  \__/\  /  \___  >___  / (____  /   __/|   __/                                                   
+       \/       \/    \/       \/|__|   |__|                                                      
+                                  .__  __             __                   __  .__                
+  ______ ____   ____  __ _________|__|/  |_ ___.__. _/  |_  ____   _______/  |_|__| ____    ____  
+ /  ___// __ \_/ ___\|  |  \_  __ \  \   __<   |  | \   __\/ __ \ /  ___/\   __\  |/    \  / ___\ 
+ \___ \\  ___/\  \___|  |  /|  | \/  ||  |  \___  |  |  | \  ___/ \___ \  |  | |  |   |  \/ /_/  >
+/____  >\___  >\___  >____/ |__|  |__||__|  / ____|  |__|  \___  >____  > |__| |__|___|  /\___  / 
+     \/     \/     \/                       \/                 \/     \/               \//_____/  
+        .__  __  .__      ___.                                                                    
+__  _  _|__|/  |_|  |__   \_ |_________  ______  _  ________ ___________  ______                  
+\ \/ \/ /  \   __\  |  \   | __ \_  __ \/  _ \ \/ \/ /  ___// __ \_  __ \/  ___/                  
+ \     /|  ||  | |   Y  \  | \_\ \  | \(  <_> )     /\___ \\  ___/|  | \/\___ \                   
+  \/\_/ |__||__| |___|  /  |___  /__|   \____/ \/\_//____  >\___  >__|  /____  >                  
+                      \/       \/                        \/     \/           \/                       
+                                                                              
+	
+	-->
+	
+	
+	
+	<meta name="description" content="A guide on using browser dev-tools for performing web app pentesting">
+	<meta name="keywords" content="browser,chrome,firefox,safari,internet,explorer,edge,web,app,application, penetration,testing,security">
+	<meta name="author" content="Abhi M Balakrishnan">
+	<link href="normalize.css" rel="stylesheet">
+	<link href="milligram.css" rel="stylesheet">
+	<link href="fa-svg-with-js.css" rel="stylesheet">
+	<script defer src="fa-brands.js"></script>
+	<script defer src="fontawesome.min.js"></script>
+	<link href="data:image/png;base64,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" rel="icon" type="image/x-icon">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="column">
+				<center>
+					<h1>Web app security testing with browsers</h1><img src="browsers.png" width="50%">
+				</center>
+				<hr>
+			</div>
+		</div>
+		<div class="row">
+			<div class="column column-20">
+				<a href="#intro" id="linkintro">Introduction</a><br>
+				<a href="#use-cases" id="linkusecases">Use cases</a><br>
+				<a href="#thematrix">The Matrix</a><br>
+				<a href="#opendevtools">Open Dev Tools</a><br>
+				<a href="#useragent" id="linkuseragent">Switching User Agents</a><br>
+				&emsp;<a href="#useragentchrome"><span class="fab fa-chrome"></span> Google Chrome</a><br>
+				&emsp;<a href="#useragentfirefox"><span class="fab fa-firefox"></span> Mozilla Firefox</a><br>
+				&emsp;<a href="#useragentedgeie"><span class="fab fa-edge"></span> Edge/IE</a><br>
+				<a href="#editreplay" id="linkeditreplay">Edit and Replay Requests</a><br>
+				&emsp;<a href="#editreplayfirefox"><span class="fab fa-firefox"></span> Mozilla Firefox</a><br>
+				<a href="#editcookie" id="linkeditcookie">Editing Cookies</a><br>
+				&emsp;<a href="#editcookiechrome"><span class="fab fa-chrome"></span> Google Chrome</a><br>
+				&emsp;<a href="#editcookiefirefox"><span class="fab fa-firefox"></span> Mozilla Firefox</a><br>
+				&emsp;<a href="#editcookieedgeie"><span class="fab fa-edge"></span> Edge/IE</a><br>
+				<a href="#editlocalstorage" id="linkeditlocalstorage">Editing Local Storage</a><br>
+				&emsp;<a href="#editlocalstoragechrome"><span class="fab fa-chrome"></span> Google Chrome</a><br>
+				&emsp;<a href="#editlocalstoragefirefox"><span class="fab fa-firefox"></span> Mozilla Firefox</a><br>
+				&emsp;<a href="#editlocalstorageedgeie"><span class="fab fa-edge"></span> Edge/IE</a><br>
+				<a href="#disablejavascript" id="linkdisablejavascript">Disable Javascript</a><br>
+				&emsp;<a href="#disablejavascriptchrome"><span class="fab fa-chrome"></span> Google Chrome</a><br>
+				&emsp;<a href="#disablejavascriptfirefox"><span class="fab fa-firefox"></span> Mozilla Firefox</a><br>
+				<a href="#viewheaders" id="linkviewheaders">View Headers</a><br>
+				&emsp;<a href="#viewheaderschrome"><span class="fab fa-chrome"></span> Google Chrome</a><br>
+				&emsp;<a href="#viewheadersfirefox"><span class="fab fa-firefox"></span> Mozilla Firefox</a><br>
+				&emsp;<a href="#viewheadersedgeie"><span class="fab fa-edge"></span> Edge/IE</a><br>
+				<a href="#capturescreenshots">Capture Screen-shots</a><br>
+				&emsp;<a href="#capturescreenshotschrome"><span class="fab fa-chrome"></span> Google Chrome</a><br>
+				&emsp;<a href="#capturescreenshotsfirefox"><span class="fab fa-firefox"></span> Mozilla Firefox</a><br>
+				&emsp;<a href="#capturescreenshotsedgeie"><span class="fab fa-edge"></span> Edge/IE</a><br>
+				<a href="#offlinemode">Offline mode</a><br>
+				&emsp;<a href="#offlinemodechrome"><span class="fab fa-chrome"></span> Google Chrome</a><br>
+				&emsp;<a href="#offlinemodefirefox"><span class="fab fa-firefox"></span> Mozilla Firefox</a><br>
+				<a href="#encodedecode">Encode and Decode</a><br>
+				<a href="#disablecss" id="linkdisablecss">Disable CSS</a><br>
+			</div>
+			<div class="column column-80">
+				<div id="intro">
+					<h2>Introduction</h2>
+					<p>Can you perform web application security testing just using a browser? Think of a scenario where you have to do security testing from a very limited environment where you have no access to run scripts or tools and all you have is a browser. This guide looks at web application security testing from such a locked down scenario. The goal is to cover as many security test cases as possible from a browser. Even though it’s not possible to perform all web application related security test cases from browsers, some good coverage can be guaranteed with the help of the same. A browser alone cannot replace conventional web application security testing methodologies which involve proxies and scanners. Relying completely on security tests that can be done from a browser is never recommended.</p>
+					<p>One of the other potential use cases for this guide would be while preparing security testing reports. The most important section in any vulnerability finding write-up is ‘reproduction steps’. Most security professionals make use of tools like Burp Suite or ZAP extensively for this step. However, the major audience (including developers) of the security testing won’t be having enough knowledge about setting up the proxy and similar tools – making the vulnerability reproduction tough on their end. As a matter of fact, you might have been in post pen-testing meetings where stakeholders asked you to reduce the likelihood of some vulnerabilities just because exploiting them requires setting up a proxy. After going through this guide, you will be able to re-write most of those write-ups with simple steps that just involves browser – which almost everyone on the target audience of the testing report has access to.</p>
+					<p>It is to be noted that this research only focuses on what all web application security related tests that can be done just by using native features of the browser. This does not cover what these browsers can do with the help of extensions. Almost all major browsers support installing extensions these days and there are lot more powerful things that can be done with the help of them, which won’t be covered in this paper.</p>
+					<p>Majority of the article focuses on 'developer tools' provided by the browsers. Even though these tools are aimed at making web development process easy, we would be able to help them in covering test cases as well.</p>
+
+					<p><iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/Xy7VoDS--BE?rel=0&amp;showinfo=0" frameborder="0"  allowfullscreen></iframe></p>
+				</div>
+				<br><hr><br>
+				<div id="use-cases">
+					<h2>Potential use cases for this guide</h2>
+					<ol><li>If you are on day one of a week-long web application penetration testing project, and the support team is still trying to figure out how can they give you a non-locked-up workstation, you can rely on this document to understand the application better.</li>
+					<li>If you want to make your pentest reports more friendly to the audience.</li>
+					<li>If you want to train users or developers of basic web application related security issues</li>
+					<li>For conducting internal company-wide CTFs. You can make CTFs that can be solved just by using the browser and that can help you bring more people onto the wagon since almost everyone must be having access to a browser these days.</li>
+					<li>Just by putting this guide and comparison table out there, we are telling browsers that we appreciate these features offered by them and we expect more.</li></ol>
+					<br>
+					<h2>This guide cannot be used as:</h2>
+					<ol><li>A complete web application penetration testing guide.</li>
+					<li>A complete web application penetration testing check-list.</li></ol>
+				</div>
+				<br><hr><br>
+				<div id="opendevtools">
+					<h2>Opening Dev Tools</h2>
+					This can be done in different ways:<br><br>
+					<ol>
+						<li>By pressing <kbd>F12</kbd>.</li>
+						<li>By pressing <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>I</kbd> on Windows.</li>
+						<li>By pressing <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>I</kbd>on Mac.</li>
+						<li>By right clicking on the web page and then selecting <b>Inspect</b> on Google Chrome.</li>
+						<li>By clicking on the kabob menu and then navigating to <b>More Tools</b> and then <b>Developer Tools</b> on Google Chrome.</li>
+						<li>By right clicking on the web page and then selecting <b>Inspect Element</b> on Mozilla Firefox.</li>
+						<li>By clicking on the hamburger menu and then navigating to <b>Web Developer</b> and then <b>Toggle Tools</b> on Mozilla Firefox.</li>
+						<li>By clicking on the gear icon and then navigating to <b>F12 Developer Tools</b> on Edge/IE.</li>
+					</ol>
+				</div>
+				<br><hr><br>
+				<div id="thematrix">
+					<h2>Support Matrix</h2>
+					<table id="comparisonmatrix">
+						<thead>
+							<tr>
+								<th>Function</th>
+								<th><span class="fab fa-chrome"></span> Google Chrome</th>
+								<th><span class="fab fa-firefox"></span> Mozilla Firefox</th>
+								<th><span class="fab fa-edge"></span> Edge/IE</th>
+								<th><span class="fab fa-safari"></span> Safari</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td style="text-align:left;">Switching User Agents</td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#0f0;">✔</span></td>
+							</tr>
+							<tr>
+								<td style="text-align:left;">Edit and Replay Requests</td>
+								<td><span style="color:#f00;">✖</span></td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#f00;">✖</span></td>
+								<td><span style="color:#f00;">✖</span></td>
+							</tr>
+							<tr>
+								<td style="text-align:left;">Editing Cookies</td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#f00;">✖</span></td>
+							</tr>
+							<tr>
+								<td style="text-align:left;">Editing Local Storage</td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#f00;">✖</span></td>
+							</tr>
+							<tr>
+								<td style="text-align:left;">Disable CSS</td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#0f0;">✔</span></td>
+							</tr>
+							<tr>
+								<td style="text-align:left;">Disable Javascript</td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#f00;">✖</span></td>
+								<td><span style="color:#0f0;">✔</span></td>
+							</tr>
+							<tr>
+								<td style="text-align:left;">View Headers</td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#0f0;">✔</span></td>
+							</tr>
+							<tr>
+								<td style="text-align:left;">Native screen-shot capture</td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#f00;">✖</span></td>
+							</tr>
+							<tr>
+								<td style="text-align:left;">Offline mode</td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#f00;">✖</span></td>
+								<td><span style="color:#f00;">✖</span></td>
+							</tr>
+							<tr>
+								<td style="text-align:left;">Encode and Decode</td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#0f0;">✔</span></td>
+								<td><span style="color:#0f0;">✔</span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<br><hr><br>
+				<div id="useragent">
+					<h2>Switching User Agents</h2>
+					<h3 id="useragentchrome"><span class="fab fa-chrome"></span> Google Chrome: Switching User Agents</h3>
+					<ol>
+						<li>Open browser's <a href="#opendevtools">Developer Tools</a>.</li>
+						<li>Click the menu button to the right of the <b>Console</b> tab at the bottom of the Developer Tools pane and select <b>Network Conditions</b></li>
+						<li>Uncheck the “Select automatically” radio button.</li>
+						<li>Select the user agent from dropdown or enter a custom user agent</li>
+					</ol><video controls="" width="700"><source src="02-user-agent-chrome.mp4" type="video/mp4"> Your browser does not support HTML5 video.</video>
+					<br><br>
+					<h3 id="useragentchrome"><span class="fab fa-firefox"></span> Mozilla Firefox: Switching User Agents</h3>
+					<ol>
+						<li>Navigate to Firefox’s about:config page and click on <b>I accept the risk!</b></li>
+						<li>Type useragent into the search field.</li>
+						<li>Look for <b>general.useragent.override</b>, if you can't see this preference, right-click on the about:config page &gt; <b>New</b> &gt; <b>String</b></li>
+						<li>Name the preference <b>general.useragent.override</b></li>
+						<li>Right click on the <b>general.useragent.override</b> preference and select <b>Reset</b> to switch back to the default user agent.</li>
+					</ol><video controls="" width="700"><source src="02-user-agent-firefox.mp4" type="video/mp4"> Your browser does not support HTML5 video.</video>
+					<br><br>
+					<h3 id="useragentedgeie"><span class="fab fa-edge"></span> Edge/IE: Switching User Agents</h3>
+					<ol>
+						<li>Open browser's <a href="#opendevtools">Developer Tools</a>.</li>
+						<li>Click on <b>Emulation</b> tab</li>
+						<li>Select user agents from drop down menu</li>
+					</ol><video controls="" width="700"><source src="02-user-agent-ie.mp4" type="video/mp4"> Your browser does not support HTML5 video.</video>
+				</div>
+				<br><hr><br>
+				<div id="editreplay">
+					<h2>Edit and Replay Requests</h2>
+					<h3 id="editreplayfirefox"><span class="fab fa-firefox"></span> Mozilla Firefox: Edit and Replay Requests</h3>
+					<ol>
+						<li>Open browser's <a href="#opendevtools">Developer Tools</a>.</li>
+						<li>Click on <b>Network</b> tab</li>
+						<li>Perform any action on the web application</li>
+						<li>Right click on the HTTP request from the list and select <b>Edit and Resend</b></li>
+						<li>Make desired modifications and click on <b>Send</b> button</li>
+						<li>Right click on the modified request and click on <b>Open in New Tab</b></li>
+					</ol><video controls="" width="700"><source src="03-editreaplyrequests-firefox.mp4" type="video/mp4"> Your browser does not support HTML5 video.</video>
+				</div>
+				<br><hr><br>
+				<div id="editcookie">
+					<h2>Editing Cookies</h2>
+					<h3 id="editcookiechrome"><span class="fab fa-chrome"></span> Google Chrome: Editing Cookies</h3>
+					<ol>
+						<li>Open browser's <a href="#opendevtools">Developer Tools</a>.</li>
+						<li>Click on <b>Application</b> tab</li>
+						<li>Navigate to <b>Cookies</b> and then select the application domain</li>
+						<li>Double click on any cookie value to edit them</li>
+					</ol><video controls="" width="700"><source src="04-edit-cookie-chrome.mp4" type="video/mp4"> Your browser does not support HTML5 video.</video>					
+					<br><br>
+					<h3 id="editcookiefirefox"><span class="fab fa-firefox"></span> Mozilla Firefox: Editing Cookies</h3>
+					<ol>
+						<li>Open browser's <a href="#opendevtools">Developer Tools</a>.</li>
+						<li>Click on <b>Storage</b> tab</li>
+						<li>Navigate to <b>Cookies</b> and then select the application domain</li>
+						<li>Double click on any cookie value to edit them</li>
+					</ol><video controls="" width="700"><source src="04-edit-cookie-firefox.mp4" type="video/mp4"> Your browser does not support HTML5 video.</video>					
+					<br><br>
+					<h3 id="editcookieedge"><span class="fab fa-edge"></span> Edge/IE: Editing Cookies</h3>
+					<ol>
+						<li>Open browser's <a href="#opendevtools">Developer Tools</a>.</li>
+						<li>Click on <b>Debugger</b> tab</li>
+						<li>Navigate to <b>Cookies</b> and then select the application domain</li>
+						<li>Double click on any cookie value to edit them</li>
+					</ol><video controls="" width="700"><source src="04-edit-cookie-firefox.mp4" type="video/mp4"> Your browser does not support HTML5 video.</video>
+				</div>
+				<br><hr><br>
+				<div id="editlocalstorage">
+					<h2>Editing Local Storage</h2>
+					<h3 id="editlocalstoragefirefox"><span class="fab fa-firefox"></span> Mozilla Firefox: Editing Local Storage</h3>
+					<ol>
+						<li>Open browser's <a href="#opendevtools">Developer Tools</a>.</li>
+						<li>Click on <b>Storage</b> tab</li>
+						<li>Navigate to <b>Local Storage</b> and then select the application domain</li>
+						<li>Double click on any entry to edit them</li>
+					</ol><video controls="" width="700"><source src="05-localstorage-firefox.mp4" type="video/mp4"> Your browser does not support HTML5 video.</video>
+					<br><br>
+					<h3 id="editlocalstoragechrome"><span class="fab fa-chrome"></span> Google Chrome: Editing Local Storage</h3>
+					<ol>
+						<li>Open browser's <a href="#opendevtools">Developer Tools</a>.</li>
+						<li>Click on <b>Storage</b> tab</li>
+						<li>Navigate to <b>Local Storage</b> and then select the application domain</li>
+						<li>Double click on any entry to edit them</li>
+					</ol><video controls="" width="700"><source src="05-localstorage-chrome.mp4" type="video/mp4"> Your browser does not support HTML5 video.</video>
+					<br><br>
+					<h3 id="editlocalstorageedgeie"><span class="fab fa-edge"></span> Edge/IE: Editing Local Storage</h3>
+					<ol>
+						<li>Open browser's <a href="#opendevtools">Developer Tools</a>.</li>
+						<li>Click on <b>Console</b> tab</li>
+						<li>Use <b>localStorage</b>, <b>localStoragegetItem</b> and <b>localStorageSetItem</b></li>
+					</ol><video controls="" width="700"><source src="05-localstorage-ie.mp4" type="video/mp4"> Your browser does not support HTML5 video.</video>
+				</div>
+				<br><hr><br>
+				<div id="disablejavascript">
+					<h2>Disable JavaScript</h2>
+					<h3 id="disablejavascriptchrome"><span class="fab fa-chrome"></span> Google Chrome: Disable JavaScript</h3>
+					<ol>
+						<li>Open browser's <a href="#opendevtools">Developer Tools</a>.</li>
+						<li>Click on three dots menu on the right side of the web developer toolbar and click on <b>Settings</b></li>
+						<li>Navigate to <b>Preferences</b> tab</li>
+						<li>Under <b>Debugger</b>, check the <b>Disable JavaScript</b> box</li>
+					</ol><video controls="" width="700"><source src="07-disable-javascript-chrome.mp4" type="video/mp4"> Your browser does not support HTML5 video.</video>
+					<br><br>
+					<h3 id="disablejavascriptfirefox"><span class="fab fa-firefox"></span> Mozilla Firefox: Disable JavaScript</h3>
+					<ol>
+						<li>Open browser's <a href="#opendevtools">Developer Tools</a>.</li>
+						<li>Click on settings on the right side of the web developer toolbar</li>
+						<li>Under <b>Advanced Settings</b>, check the <b>Disable JavaScript *</b> box</li>
+					</ol><video controls="" width="700"><source src="07-disable-javascript-firefox.mp4" type="video/mp4"> Your browser does not support HTML5 video.</video>
+				</div>
+				<br><hr><br>
+				<div id="viewheaders">
+					<h2>Viewing Headers</h2>
+					<h3 id="viewheaderschrome"><span class="fab fa-chrome"></span> Google Chrome: Viewing Headers</h3>
+					<ol>
+						<li>Open browser's <a href="#opendevtools">Developer Tools</a>.</li>
+						<li>Navigate to <b>Network</b> tab</li>
+						<li>Perform any action on the web application</li>
+						<li>Select the page name from left side</li>
+					</ol><video controls="" width="700"><source src="0a-headers-chrome.mp4" type="video/mp4"> Your browser does not support HTML5 video.</video>
+					<br><br>
+					<h3 id="viewheadersfirefox"><span class="fab fa-firefox"></span> Mozilla Firefox: Viewing Headers</h3>
+					<ol>
+						<li>Open browser's <a href="#opendevtools">Developer Tools</a>.</li>
+						<li>Navigate to <b>Network</b> tab</li>
+						<li>Perform any action on the web application</li>
+						<li>Select the page name from left side</li>
+					</ol><video controls="" width="700"><source src="0a-headers-firefox.mp4" type="video/mp4"> Your browser does not support HTML5 video.</video>
+					<br><br>
+					<h3 id="viewheadersedgeie"><span class="fab fa-edge"></span> Edge/IE: Viewing Headers</h3>
+					<ol>
+						<li>Open browser's <a href="#opendevtools">Developer Tools</a>.</li>
+						<li>Navigate to <b>Network</b> tab</li>
+						<li>Click on Play button</li>
+						<li>Perform any action on the web application</li>
+						<li>Click on Stop button</li>
+						<li>Select the page name and click on <b>Details</b> tab</li>
+					</ol><video controls="" width="700"><source src="0a-headers-ie.mp4" type="video/mp4"> Your browser does not support HTML5 video.</video>
+				</div>
+				<br><hr><br>
+				<div id="capturescreenshots">
+					<h2>Capture Screen-shots</h2>					
+					<h3 id="capturescreenshotschrome"><span class="fab fa-chrome"></span> Google Chrome: Capture Screen-shots</h3>
+					<ol>
+						<li>Open browser's <a href="#opendevtools">Developer Tools</a>.</li>
+						<li>Press on </b>Toggle Device Toolbar</b> button or press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd> </li>
+						<li>Click on three-vertical-dots menu on the right</li>
+						<li>Click on <b>Capture Screenshot</b></li>
+					</ol><video controls="" width="700"><source src="08-capture-screenshots-chrome.mp4" type="video/mp4"> Your browser does not support HTML5 video.</video>
+					<br><br>
+					<h3 id="capturescreenshotsfirefox"><span class="fab fa-firefox"></span> Mozilla Firefox: Capture Screen-shots</h3>
+					<ol>
+						<li>Click on three-horizontal-dots on the URL bar</li>
+						<li>Click on <b>Take a Screenshot</b></li>
+					</ol><video controls="" width="700"><source src="08-capture-screenshots-firefox.mp4" type="video/mp4"> Your browser does not support HTML5 video.</video>
+					<br><br>
+					<h3 id="capturescreenshotsedgeie"><span class="fab fa-edge"></span> Edge/IE: Capture Screen-shots</h3>
+					<ol>
+						<li>Click on the pencil-and-selection icon on the URL bar</li>
+						<li>Click on save button or select an area with the help of scissor tool</li>
+					</ol><video controls="" width="700"><source src="08-capture-screenshots-edge.mp4" type="video/mp4"> Your browser does not support HTML5 video.</video>
+				</div>
+				<br><hr><br>
+				<div id="offlinemode">
+					<h2>Offline mode</h2>
+					<h3 id="offlinemodechrome"><span class="fab fa-chrome"></span> Google Chrome: Offline mode</h3>
+					<ol>
+						<li>Open browser's <a href="#opendevtools">Developer Tools</a>.</li>
+						<li>Navigate to <b>Network</b> tab</li>
+						<li>Check the <b>Offline</b> box</li>
+					</ol><video controls="" width="700"><source src="09-offline-mode-chrome.mp4" type="video/mp4"> Your browser does not support HTML5 video.</video>
+					<br><br>
+					<h3 id="offlinemodefirefox"><span class="fab fa-firefox"></span> Mozilla Firefox: Offline mode</h3>
+					<ol>
+						<li>Select <b>Work Offline</b> from the menu
+					</ol><video controls="" width="700"><source src="09-offline-mode-firefox.mp4" type="video/mp4"> Your browser does not support HTML5 video.</video>
+				</div>
+				<br><hr><br>
+				<div id="encodedecode">
+					<h2>Encode and Decode</h2>Browser consoles can be used for basic encoding\decoding functions.
+					<table>
+						<thead>
+							<tr>
+								<th>Function</th>
+								<th>Code</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Base64 encode</td>
+								<td><pre><code>btoa("<span style="color:#8e44ad;">string-to-encode</span>")</code></pre></td>
+							</tr>
+							<tr>
+								<td>Base64 decode</td>
+								<td><pre><code>atob("<span style="color:#8e44ad;">string-to-decode</span>")</code></pre></td>
+							</tr>
+							<tr>
+								<td>URL encode</td>
+								<td><pre><code>encodeURIComponent("<span style="color:#8e44ad;">string-to-encode</span>")</code></pre></td>
+							</tr>
+							<tr>
+								<td>URL decode</td>
+								<td><pre><code>decodeURIComponent("<span style="color:#8e44ad;">string-to-decode</span>")</code></pre></td>
+							</tr>
+							<tr>
+								<td>HTML encode</td>
+								<td><pre><code>escape("<span style="color:#8e44ad;">string-to-encode</span>")</code></pre></td>
+							</tr>
+							<tr>
+								<td>HTML decode</td>
+								<td><pre><code>unescape("<span style="color:#8e44ad;">string-to-decode</span>")</code></pre></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<br><hr><br>
+				<div id="disablecss">
+					<h2>Disable CSS</h2>
+					<ol>
+						<li>Open browser's <a href="#opendevtools">Developer Tools</a>.</li>
+						<li>Click on <b>Console</b> tab</li>
+						<li>Copy and paste the following and press enter.</li>
+					</ol>
+					<table>
+						<thead>
+							<tr>
+								<th>Function</th>
+								<th>Code</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>To remove all external style-sheets</td>
+								<td><pre><code>$('style,link[rel="stylesheet"]').remove();</code></pre></td>
+							</tr>
+							<tr>
+								<td>To remove all internal style-sheets</td>
+								<td><pre><code>$('style').remove();</code></pre></td>
+							</tr>
+							<tr>
+								<td>To remove all inline styles</td>
+								<td><pre><code>Array.prototype.forEach.call(document.querySelectorAll('*'),<br>function(el){el.removeAttribute('style');});</code></pre></td>
+							</tr>
+							<tr>
+								<td>To remove everything from head tag</td>
+								<td><pre><code>$('head').remove();</code></pre></td>
+							</tr>
+						</tbody>
+					</table>
+					<video controls="" width="700"><source src="06-disable-css.mp4" type="video/mp4"> Your browser does not support HTML5 video.</video>
+				</div>
+				<br><hr><br>
+				<div id="footer">
+				With <span style="color:#f00;">❤</span> from <a href="https://www.linkedin.com/in/abhimbalakrishnan">Abhi M Balakrishnan</a>, <a href="https://www.securitycompass.com/">SecurityCompass</a>
+				</div>
+				<br><hr><br>
+			</div>
+		</div>
+	</div>
+	<script language="Javascript" src="jquery-3.2.1.min.js" type="text/javascript">
+	</script>
+	<script>
+	(function() {
+  var frame = 0;
+  // var str = new Array(100).fill(null).map(el => 'this is').join(' ');
+  // var str2 = new Array(100).fill(null).map(el => 'a test').join(' ');
+  var frames = [
+    "Web app security testing with browsers",
+    "Web app security testing with Chrome",
+    "Web app security testing with Firefox",
+    "Web app security testing with Edge",
+    "Web app security testing with IE",
+    "With ❤ from Abhi M Balakrishnan, SecurityCompass",
+    "SDElements rocks!!!",
+    "Where are the browsers?",
+    "None of these can beat OWASP Mantra though",
+    "Those were the times",
+    "Have you tried BrickTown?",
+    "Yeah, it's sort of like OWASP Bricks",
+    "Browsers are very powerful these days",
+    "At one point I thought of using browser console to convey my idea",
+    "Replacing PowerPoint with browser console sounds neat",
+    "Well, may be next time",
+    "You should checkout Snow",
+    "Just Google for SecHow Snow",
+    "It will help you protect data on screen"
+  ];
+  var showNext = () => {
+    console.clear();
+	
+    
+	console.log('%c                              ', 'font-size: 80px; background-size: auto; background: url(https://getmantra.com/web-app-security-testing-with-browsers/browsers-small.png) no-repeat;');
+    console.log(
+      `%c ${frames[frame]}`,
+      "background: white; color: #6b5b95; font-size: 2em; padding: 0px 0px;"
+    );
+    setTimeout(
+      showNext,1500
+    );
+    frame++;
+    if (frame >= frames.length) {
+      frame = 0;
+    }
+  };
+  showNext();
+})();
+</script>
+</body>
+</html>
